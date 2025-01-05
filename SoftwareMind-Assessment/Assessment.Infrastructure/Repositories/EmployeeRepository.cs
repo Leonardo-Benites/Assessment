@@ -19,8 +19,7 @@ namespace Assessment.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Employee>> GetAll()
         {
-            var date = DateTime.Now;
-            return await _context.Employee.ToListAsync();
+            return await _context.Employee.Include(x => x.Department).ToListAsync();
         }
         public async Task Insert(Employee obj)
         {
