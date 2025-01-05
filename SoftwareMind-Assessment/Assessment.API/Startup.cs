@@ -1,8 +1,7 @@
-﻿using Assessment.API.Models;
-using Assessment.Application.Interfaces;
+﻿using Assessment.Application.Interfaces;
 using Assessment.Application.Services;
 using Assessment.Infrastructure.Context;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assessment.API
@@ -28,6 +27,9 @@ namespace Assessment.API
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
 
+            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(MappingProfileService));
+
             services.AddControllers();
             services.AddRazorPages();
             services.AddControllersWithViews();
@@ -47,18 +49,16 @@ namespace Assessment.API
 
             app.UseAuthorization();
 
+            new MapperConfiguration(mapper =>
+            {
+                mapper.AddProfile<MappingProfileService>();
+            });
+
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
             //    name: "default",
             //        pattern: "{controller=" + _controller + "}/{action=" + _home + "}/{id?}");
-            //});
-
-            //var configuration = new MapperConfiguration(mapper =>
-            //{
-            //    //mapper.CreateMap<Pedido, PedidoViewModel>().ReverseMap();
-
-            //    mapper.AddProfile<MappingProfileService>();
             //});
         }
     }
