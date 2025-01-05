@@ -18,7 +18,10 @@ namespace Assessment.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string sqlConnection = _configuration.GetConnectionString("DefaultConnection");
+            var password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
+            string sqlConnection = _configuration.GetConnectionString("MySqlConnection");
+
+            string connectionString = sqlConnection + password;
 
             services.AddDbContext<AppDbContext>(opt => opt.UseMySQL(sqlConnection));
 

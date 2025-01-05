@@ -1,8 +1,5 @@
 ﻿using Assessment.API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Reflection.Emit;
 
 namespace Assessment.Infrastructure.Context
 {
