@@ -18,7 +18,7 @@ namespace Assessment.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<Employee>>> GetEmployees()
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> GetEmployees()
         {
             try
             {
@@ -33,12 +33,12 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<EmployeeDto>.ErrorResponse();
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ApiResponse<Employee>>> GetEmployee(int id)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> GetEmployee(int id)
         {
             try
             {
@@ -53,12 +53,12 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<EmployeeDto>.ErrorResponse();
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ApiResponse<Employee>>> PutEmployee(int id, [FromBody] EmployeeDto employeeUpdateDto)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PutEmployee(int id, [FromBody] EmployeeDto employeeUpdateDto)
         {
             try
             {
@@ -73,12 +73,12 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<EmployeeDto>.ErrorResponse();
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<Employee>>> PostEmployee([FromBody] EmployeeDto employeeCreateDto)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PostEmployee([FromBody] EmployeeDto employeeCreateDto)
         {
             try
             {
@@ -93,12 +93,12 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<EmployeeDto>.ErrorResponse();
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ApiResponse<Employee>>> DeleteEmployee(int id)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> DeleteEmployee(int id)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<EmployeeDto>.ErrorResponse();
             }
         }
     }
