@@ -25,6 +25,16 @@ builder.Services.AddAutoMapper(typeof(MappingProfileService));
 
 builder.Services.AddControllers();
 
+// Enable CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        policy => policy.WithOrigins("http://localhost:8080")  // Frontend URL
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+});
+
 // Add Swagger service
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -48,6 +58,8 @@ else
 {
     app.UseHttpsRedirection();
 }
+
+app.UseCors("AllowLocalhost");  // Apply CORS policy here
 
 app.UseRouting();
 app.UseStaticFiles();

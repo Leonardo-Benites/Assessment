@@ -15,7 +15,8 @@ namespace Assessment.Infrastructure.Repositories
 
         public async Task<Employee> GetById(int id)
         {
-            return await _context.Employee.FindAsync(id);
+            return await _context.Employee.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
         }
         public async Task<IEnumerable<Employee>> GetAll()
         {
@@ -23,7 +24,7 @@ namespace Assessment.Infrastructure.Repositories
         }
         public async Task Insert(Employee obj)
         {
-            obj.HireDate = DateTime.Now;
+            _context.Department.Attach(obj.Department = new Department() { Id = obj.DepartmentId });
             _context.Employee.Add(obj);
             await _context.SaveChangesAsync();
         }

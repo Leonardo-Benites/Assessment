@@ -42,6 +42,17 @@ namespace Assessment.Application.Services
 
         public async Task<ApiResponse<EmployeeDto>> GetById(int id)
         {
+            if (id == 0)
+            {
+                return new ApiResponse<EmployeeDto>
+                {
+                    Data = null,
+                    Message = $"Id cannot be null.",
+                    Code = 400,
+                    Success = false
+                };
+            }
+
             var employee = await _employeeRepository.GetById(id);
 
             if (employee is null)
