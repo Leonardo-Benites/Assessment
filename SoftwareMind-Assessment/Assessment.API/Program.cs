@@ -7,12 +7,20 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+//STEP 4 - Set the root password for mysql connection as an environment variable
 var password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
 string sqlConnection = builder.Configuration.GetConnectionString("MySqlConnection");
 
-string connectionString = sqlConnection + password + ";";
+string connectionString = "";
+
+if (!string.IsNullOrEmpty(password))
+{
+    connectionString = sqlConnection + password + ";";
+}
+else
+{
+    connectionString = sqlConnection;
+}
 
 // Registering services
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySQL(connectionString));
