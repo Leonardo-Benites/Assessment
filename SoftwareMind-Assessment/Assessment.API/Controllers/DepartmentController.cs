@@ -1,4 +1,5 @@
 ﻿using Assessment.API.Models;
+using Assessment.Application.Dtos;
 using Assessment.Application.Interfaces;
 using Assessment.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace Assessment.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<Employee>>> GetDepartments()
+        public async Task<ActionResult<ApiResponse<DepartmentDto>>> GetDepartments()
         {
             try
             {
@@ -32,7 +33,7 @@ namespace Assessment.API.Controllers
             }
             catch (Exception)
             {
-                return ApiResponse<Employee>.ErrorResponse();
+                return ApiResponse<DepartmentDto>.ErrorResponse();
             }
         }
     }

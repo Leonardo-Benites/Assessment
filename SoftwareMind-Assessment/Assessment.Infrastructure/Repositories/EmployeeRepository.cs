@@ -30,11 +30,13 @@ namespace Assessment.Infrastructure.Repositories
         }
         public async Task Update(Employee obj)
         {
+            _context.Department.Attach(obj.Department = new Department() { Id = obj.DepartmentId });
             _context.Employee.Update(obj);
             await _context.SaveChangesAsync();
         }
         public async Task Delete(Employee obj)
         {
+            _context.Department.Attach(obj.Department = new Department() { Id = obj.DepartmentId });
             _context.Employee.Remove(obj);
             await _context.SaveChangesAsync();
         }
