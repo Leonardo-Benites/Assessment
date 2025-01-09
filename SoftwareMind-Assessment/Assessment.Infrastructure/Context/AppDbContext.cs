@@ -19,7 +19,7 @@ namespace Assessment.Infrastructure.Context
              .HasOne(e => e.Department) 
              .WithMany(d => d.Employees) 
              .HasForeignKey(e => e.DepartmentId)  
-             .OnDelete(DeleteBehavior.Cascade); 
+             .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Employee>()
                 .Property(e => e.Phone) 

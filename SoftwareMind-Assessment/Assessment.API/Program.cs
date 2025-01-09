@@ -1,9 +1,10 @@
 using Assessment.Application.Interfaces;
 using Assessment.Application.Services;
 using Assessment.Infrastructure.Context;
-using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,20 @@ else
 {
     connectionString = sqlConnection;
 }
+
+var key = "ThisIsASecretKeyForJwtToken"; // Use a secure key
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+        };
+    });
 
 // Registering services
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySQL(connectionString));
@@ -72,6 +87,7 @@ app.UseCors("AllowLocalhost");  // Apply CORS policy here
 app.UseRouting();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();  // Ensure API controllers are mapped

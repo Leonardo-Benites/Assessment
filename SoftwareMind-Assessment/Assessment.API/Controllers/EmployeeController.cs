@@ -2,10 +2,10 @@
 using Assessment.Application.Interfaces;
 using Assessment.Application.Responses;
 using Assessment.Application.Dtos;
-using Assessment.API.Models; 
 
 namespace Assessment.API.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -17,7 +17,7 @@ namespace Assessment.API.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpGet]
+        [HttpGet] 
         public async Task<ActionResult<ApiResponse<EmployeeDto>>> GetEmployees()
         {
             try
@@ -58,11 +58,11 @@ namespace Assessment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PutEmployee(int id, [FromBody] EmployeeDto employeeUpdateDto)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PutEmployee(int id, [FromForm] EmployeeDto employeeDto, IFormFile? photo)
         {
             try
             {
-                var response = await _employeeService.Update(id, employeeUpdateDto);
+                var response = await _employeeService.Update(id, employeeDto, photo);
 
                 if (!response.Success)
                 {
@@ -78,11 +78,11 @@ namespace Assessment.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PostEmployee([FromBody] EmployeeDto employeeCreateDto)
+        public async Task<ActionResult<ApiResponse<EmployeeDto>>> PostEmployee([FromForm] EmployeeDto employeeDto, IFormFile? photo)
         {
             try
             {
-                var response = await _employeeService.Create(employeeCreateDto);
+                var response = await _employeeService.Create(employeeDto, photo);
 
                 if (!response.Success)
                 {

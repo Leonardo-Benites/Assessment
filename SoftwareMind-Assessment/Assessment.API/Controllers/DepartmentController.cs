@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Assessment.API.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase

@@ -5,6 +5,7 @@ using Assessment.Application.Responses;
 using Assessment.Infrastructure.Context;
 using Assessment.Infrastructure.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace Assessment.Application.Services
 {
@@ -71,18 +72,20 @@ namespace Assessment.Application.Services
             return ApiResponse<EmployeeDto>.SuccessResponse(employeeDto);
         }
 
-        public async Task<ApiResponse<EmployeeDto>> Create(EmployeeDto dto)
+        public async Task<ApiResponse<EmployeeDto>> Create(EmployeeDto dto, IFormFile? photo)
         {
             if (!IsRequiredFieldsFullfilled(dto))
             {
                 return new ApiResponse<EmployeeDto>
                 {
                     Data = null,
-                    Message = "(Required) Check if FirstName, Address and Phone fields are fullfilled.",
+                    Message = "FirstName, Phone and Address fields are required.",
                     Code = 400,
                     Success = false
                 };
             }
+
+            dto.Photo = await Util.ConvertFileToByteAsync(photo);
 
             var employee = _mapper.Map<Employee>(dto);
 
@@ -90,7 +93,7 @@ namespace Assessment.Application.Services
 
             return ApiResponse<EmployeeDto>.SuccessResponse(null, "Employee created successfully", 201);
         }
-        public async Task<ApiResponse<EmployeeDto>> Update(int id, EmployeeDto dto)
+        public async Task<ApiResponse<EmployeeDto>> Update(int id, EmployeeDto dto, IFormFile? photo)
         {
             if (id != dto.Id)
             {
@@ -101,6 +104,8 @@ namespace Assessment.Application.Services
                     Success = false
                 };
             }
+
+            dto.Photo = await Util.ConvertFileToByteAsync(photo);
 
             var employeeToUpdate = await _employeeRepository.GetById(id);
             if (employeeToUpdate is null)
